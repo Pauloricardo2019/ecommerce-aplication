@@ -1,28 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
-
-router.get('/products', async (req , res) => {
-    
-});
-router.get('/products/:id', async (req , res) => {
-    
-})
-router.post('/products/new', async (req , res) => {
-    
-});
-router.delete('/products/:id', async (req , res) => {
-    
-});
-router.patch('/products/:id', async (req , res) => {
-    
-});
+const ProductController = require('../controllers/productController/productController')
 
 
+router.get('/products', ProductController.getProducts);
 
+router.get('/products/:id', ProductController.getUserProducts);
 
+router.get('/products/:product_id', ProductController.getProductById);
 
+router.post('/products/:id', ProductController.createProduct);
 
+router.delete('/products/:id/:product_id', ProductController.deleteProduct);
+
+router.patch('/products/:id/:product_id', ProductController.updateProduct);
 
 
 module.exports = router;
