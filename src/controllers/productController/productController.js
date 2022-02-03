@@ -10,9 +10,9 @@ const ProductController = {
 
             const data = {username: id, ...bodyData}
 
-            const newProduct = await Product.create(data)
+            const newProduct = await Product.create(data);
 
-            return res.status(200).send(newProduct)
+            return res.status(200).send(newProduct);
 
         }catch(err){
             return res.status(400).send({error: err})
@@ -34,7 +34,12 @@ const ProductController = {
     },
 
     async getProductById( req , res){
+
+        const {product_id} = req.params
+
         try{
+            const product = await Product.findById(product_id);
+            return res.status(200).send(product);
 
         }catch(err){
             return res.status(400).send({error: err})
@@ -42,15 +47,24 @@ const ProductController = {
     },
 
     async getProducts( req , res){
-        try{
 
+        try{
+            const products = await Product.find();
+            return res.status(200).send(products)
         }catch(err){
             return res.status(400).send({error: err})
         }
     },
 
     async updateProduct( req , res){
+
+        const bodyData = req.body;
+        const {product_id} = req.params
+
         try{
+            const updateProduct = await Product.findByIdAndUpdate(product_id, bodyData, { new: true});
+
+            return res.status(200).send(updateProduct);
 
         }catch(err){
             return res.status(400).send({error: err})
@@ -58,7 +72,12 @@ const ProductController = {
     },
 
     async deleteProduct( req , res){
+
+        const {product_id} = req.params
         try{
+
+            const deleteProduct = await Product.findByIdAndDelete(product_id);
+            return res.status(200).send(deleteProduct);
 
         }catch(err){
             return res.status(400).send({error: err})
