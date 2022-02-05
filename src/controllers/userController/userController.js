@@ -5,13 +5,12 @@ const UserController = {
     async createUser(req ,res){
         const bodyData = req.body
 
-        const email = req.body.email
-
-        if(await User.findOne({email}))
-            return res.status(400).json('usuario já cadastrado')
+        if(await User.findOne({email: bodyData.email}))
+            return res.status(400).json({message: "Email já cadastrado"})
 
         try{
             const newUser = await User.create(bodyData);
+            newUser.password = undefined;
             return res.status(201).json(newUser);
 
         }catch(err){
@@ -41,10 +40,24 @@ const UserController = {
         }catch(err){
             return res.status(404).json(err)
         }
+    },
+
+    async deleleUsers(req, res){
+        const id = req.params.id;
+
+        try{
+            await User.findByIdAndDelete({_id:id});
+
+            return res.status(200).json({message: "Usuário deletado com sucesso"})
+
+        }catch(err){
+            return res.status(400).json(err)
+        }
     }
 
 }
 
 
 
-module.exports = UserController
+module.exports = UserController;
+

@@ -50,7 +50,7 @@ const ProductController = {
 
         try{
             const products = await Product.find();
-            return res.status(200).send(products)
+            return res.status(200).send(products);
         }catch(err){
             return res.status(400).send({error: err})
         }
